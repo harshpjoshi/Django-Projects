@@ -1,0 +1,18 @@
+{% extends 'products/base.html' %}
+{% block body %}
+{% if response.RESPCODE == '01' %}
+  <div class="container">
+    <div class="card p-5 m-5">
+      <div class="alert alert-success" role="alert">
+          Successfully Ordered.
+      </div>
+      <h6>Your Order Id:{{response.ORDERID}}</h6>
+      <h6>Ammount :Rs {{response.TXNAMOUNT}}</h6>
+      <h6>Date and Time:{{response.TXNDATE}}</h6>
+    </div>
+  </div>
+{% else %}
+  ORDER FAILURE
+{% endif %}
+
+{% endblock %}

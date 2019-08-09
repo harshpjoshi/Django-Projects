@@ -1,0 +1,11 @@
+{% extends 'products/base.html' %}
+{% block body %}
+<form class="" name="paytm" action="https://securegw-stage.paytm.in/order/process" method="post">
+  {% for key,value in pram_dict.items %}
+    <input type="hidden" name="{{key}}" value="{{value}}">
+  {% endfor %}
+</form>
+<script type="text/javascript">
+  document.paytm.submit();
+</script>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'products/base.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-md-4 col-sm-12 text-center">
+        <img src="{{ user.profilemodel.image.url }}" class="image2 rounded-circle" alt="">
+      </div>
+      <div class="col-md-4 col-sm-12 ">
+        {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+        <h3 class="text-center mt-4">{{user.username}}</h3>
+        <h5 class="mb-5 text-center">{{user.email}}</h5>
+        <form action="" method="post" class="mb-5" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ u_form|crispy }}
+            {{ p_form|crispy }}
+            <button type="submit" class="btn btn-primary mt-3">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

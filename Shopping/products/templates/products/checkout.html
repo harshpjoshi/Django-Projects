@@ -1,0 +1,49 @@
+{% extends 'products/base.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+    <div class="container c-font mb-4">
+
+        <h4 class="mt-5">Your Cart</h4>
+
+        <div class="row">
+          <div class="col-md-8">
+            <form action="" method="post" class="mb-5">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary mt-2">Place Order</button>
+            </form>
+          </div>
+          <div class="col-md-4">
+              <div class="card p-4" style="background: #F0F0F0;">
+                <div class="row">
+                  <div class="col text-center">
+                    <h3>Your Cart</h3>
+                  </div>
+                </div>
+                {% for i in products %}
+                <div class="row">
+                  <div class="col-md-4">
+                    <img src="{{i.product.image.url}}" alt="" class="img-thumbnail image3">
+                  </div>
+                  <div class="col-md-8">
+                      <div class="row">
+                        <h6 class="span mt-4">{{i.product.name}}</h6>
+                      </div>
+                      <div class="row">
+                        <h6>&#x24; {{i.product.price}}</h6>
+                      </div>
+                  </div>
+                </div>
+                {% endfor %}
+                <div class="row mt-4">
+                  <div class="col-md-6">
+                    <h3>Total is: &#x24; {{total.totalprice__sum}}</h3>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+    </div>
+
+{% endblock %}

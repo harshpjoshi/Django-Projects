@@ -1,0 +1,205 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.1/css/all.css" integrity="sha384-wxqG4glGB3nlqX0bi23nmgwCSjWIW13BdLUEYC4VIMehfbcro/ATkyDsF/AbIOVe" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Roboto+Slab&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'products/style.css' %}" type="text/css">
+    <title>Ecommerce</title>
+  </head>
+  <body>
+    <div class="container mt-2 mb-2">
+      <!---Top bar-->
+      <div class="row">
+        <div class="col-lg-3 col-12 c-font">
+          <h1><span class="display-4" style="color: #f51167;">E</span>commerce</h1>
+        </div>
+        <div class="col-lg-4 col-12 c-font">
+          <form action="" class="align-middle search-form">
+            <input type="search" name="" id="" class="search-bar" placeholder="Search On Eccomarce...">
+            <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+          </form>
+        </div>
+
+
+        {% if user.is_authenticated %}
+        <div class="col-lg-2 col-5 signup c-font" style="display:none">
+          <p class="display-5 text-right"><a href="{% url 'users:register' %}"><i class="far fa-user"></i> Signup</a></p>
+          </div>
+          <div class="col-lg-1 col-5 signup c-font" style="display: none;">
+            <p class="display-5 text-center"><a href="{% url 'users:login' %}"><i class="far fa-user"></i> Login</a></p>
+            </div>
+            <div class="col-lg-1 col-5 signup c-font text-center">
+              <a href="{% url 'users:profile' %}"><img src="{{ user.profilemodel.image.url }}" class="image1 rounded-circle" alt="{{user.username}}"></a>
+            </div>
+            <div class="col-lg-1 col-5 signup c-font">
+              <p class="display-5 text-center"><a href="{% url 'users:logout' %}"><i class="far fa-user"></i> Logout</a></p>
+            </div>
+        {% else %}
+        <div class="col-lg-2 col-5 signup c-font">
+          <p class="display-5 text-right"><a href="{% url 'users:register' %}"><i class="far fa-user"></i> Signup</a></p>
+          </div>
+          <div class="col-lg-1 col-5 signup c-font" >
+            <p class="display-5 text-center"><a href="{% url 'users:login' %}"><i class="far fa-user"></i> Login</a></p>
+            </div>
+            <div class="col-lg-1 col-5 signup c-font" style="display: none;">
+              <img src="{{ user.profilemodel.image.url }}" alt="">
+            </div>
+            <div class="col-lg-1 col-5 signup c-font" style="display: none;">
+              <p class="display-5 text-center"><a href="{% url 'users:logout' %}"><i class="far fa-user"></i> Logout</a></p>
+            </div>
+        {% endif %}
+
+        {% if request.get_full_path == '/accounts/register/' and user.is_authenticated %}
+        <div class="col-lg-2 col-5 signup c-font" style="display:none">
+          <p class="display-5 text-right"><a href="{% url 'users:register' %}"><i class="far fa-user"></i> Signup</a></p>
+          </div>
+          <div class="col-lg-1 col-5 signup c-font">
+            <p class="display-5 text-center"><a href="{% url 'users:login' %}"><i class="far fa-user"></i> Login</a></p>
+            </div>
+          {% elif request.get_full_path == '/accounts/login/' and user.is_authenticated %}
+          <div class="col-lg-2 col-5 signup c-font">
+            <p class="display-5 text-right"><a href="{% url 'users:register' %}"><i class="far fa-user"></i> Signup</a></p>
+            </div>
+            <div class="col-lg-1 col-5 signup c-font" style="display: none;">
+              <p class="display-5 text-center"><a href="{% url 'users:login' %}"><i class="far fa-user"></i> Login</a></p>
+              </div>
+          {% endif %}
+
+
+
+          <!-- {% if request.get_full_path == '/accounts/login/' %}
+          <div class="col-lg-1 col-5 signup c-font" style="display: none;">
+            <p class="display-5 text-center"><a href="{% url 'users:login' %}"><i class="far fa-user"></i> Login</a></p>
+            </div>
+            {% else %}
+            <div class="col-lg-1 col-5 signup c-font">
+              <p class="display-5 text-center"><a href="{% url 'users:login' %}"><i class="far fa-user"></i> Login</a></p>
+              </div>
+            {% endif %} -->
+
+
+            <div class="col-lg-2 col-7 cart c-font">
+            <div class="up-item">
+              <div class="shopping-card">
+                  <i class="fas fa-shopping-bag"></i>
+                <span>{{cart_count}}</span>
+              </div>
+              {% if user.is_authenticated %}
+                 <a href="{% url 'products:viewcart' id=user.id %}">Shopping Cart</a>
+              {% else %}
+                <a href="{% url 'users:login' %}">Shopping Cart</a>
+              {% endif %}
+              </div>
+          </div>
+      </div>
+    </div>
+    <!--Second menubar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="container c-font line-height-nav">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'products:home' %}">Home <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'products:contact' %}">Contact</a>
+                    </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Category
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      {% for item in maincat %}
+                          <a class="dropdown-item" href="{% url 'products:cat' id=item.id %}">{{item.main_cat}}</a>
+                      {% endfor %}
+
+                      <!-- <a class="dropdown-item" href="#">WOMEN</a> -->
+                      <!-- <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a> -->
+                    </div>
+                  </li>
+                </ul>
+              </div>
+        </div>
+      </nav>
+
+      {% block body %}
+      {% endblock %}
+
+      <!--Third Number-->
+
+
+
+       <!--Sixth Number-->
+       <!-- or request.get_full_path == '/accounts/profile/' or request.get_full_path == '/accounts/logout/' -->
+
+       {% if request.get_full_path == '/category/1/' or request.get_full_path == '/category/2/' %}
+
+       <footer class="container-fluid footer c-font" style="position: absolute;bottom: 0;">
+          <div class="container">
+              <div class="row">
+                  <div class="col mt-2">
+                    <h3><span class="display-4" style="color: #f51167;">E</span>commerce</h3>
+                  </div>
+              </div>
+              <div class="row text-center">
+                <div class="col">
+                    <h5 class="p-2">2019 &copy; By Harsh Joshi</h5>
+                </div>
+              </div>
+          </div>
+       </footer>
+
+       {% else %}
+
+       <footer class="container-fluid footer c-font">
+          <div class="container">
+              <div class="row">
+                  <div class="col mt-2">
+                    <h3><span class="display-4" style="color: #f51167;">E</span>commerce</h3>
+                  </div>
+              </div>
+              <div class="row text-center">
+                <div class="col">
+                    <h5 class="p-2">2019 &copy; By Harsh Joshi</h5>
+                </div>
+              </div>
+          </div>
+       </footer>
+
+       {% endif %}
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/69b8f57dfa.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+$(".list-group-item").click(function () {
+    $(".list-group-item-action").removeClass("active");
+    // $(".tab").addClass("active"); // instead of this do the below
+    $(this).addClass("active");
+});
+});
+    </script>
+
+  </body>
+</html>
